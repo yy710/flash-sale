@@ -1,0 +1,39 @@
+<view class="container">
+
+  <view class="doc-title zan-hairline--bottom">汽车聚划算</view>
+
+  <view class="zan-panel">
+    <view class="zan-card">
+      <view class="zan-card__thumb">
+        <image class="zan-card__img" src="../../images/song-max-01.jpg" mode="aspectFit"></image>
+      </view>
+      <view class="zan-card__detail">
+        <view class="zan-card__detail-row">
+          <view class="zan-card__right-col">¥ 10.99万</view>
+          <view class="zan-card__left-col zan-ellipsis--l2">
+            比亚迪 宋MAX
+          </view>
+        </view>
+
+        <view class="zan-card__detail-row zan-c-gray-darker">
+          <view class="zan-card__right-col zan-c-red">现在还剩1台</view>
+          <view class="zan-card__left-col">
+            2017款 1.5T 7座MPV
+          </view>
+        </view>
+
+        <view class="zan-card__detail-row zan-c-gray-darker">
+          <view class="zan-card__left-col">
+            {{timer1}}
+          </view>
+        </view>
+
+        <view class="zan-card__detail-row zan-c-gray-darker">
+          <view class="zan-card__left-col zan-c-red">正在秒杀中，戳这里抢购</view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+
+</view>
