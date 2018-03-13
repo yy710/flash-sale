@@ -1,8 +1,13 @@
 class CountdownTimer {
   constructor() {
+    // define arrary to store timer object
     this.timers = [];
+    this._timers = [];//参与刷新
+    // define map to sync weapp data
+    this.data = {};
   }
 
+  // add a timer
   add(name, endTime = new Date(), callback = () => { }) {
     this.timers.push({
       name: name,
@@ -12,32 +17,38 @@ class CountdownTimer {
     });
   }
 
-  start(that) {
-    // 渲染倒计时时钟
-    this.timers.forEach(item=>{
-      item.total_micro_second = item.endTime - (new Date());
-      if (item.total_micro_second <= 0) {
-        
-        return;
+  stop(name = '') {
+    this.timers.forEach(item => {
+      if (item.name === name) {
+        // delete 
+remove(this.timers, );
       }
+    })
+  }
+
+  start(that,timers,) {
+    // 渲染倒计时时钟
+    this.timers.forEach(item => {
+      item.total_micro_second = item.endtime.getTime() - (new Date());
+      this.data[item.name] = date_format(item.total_micro_second);
+      // delete timer
+      if (item.total_micro_second <= 0) {
+        this.data[item.name] = "抢购已结束，请关注下一次";
+        //delete this.data[item.name];
+      }
+
+      item.total_micro_second -= 10;
     });
-    
-    that.setData({ timers: date_format(total_micro_second) });
+
+    that.setData({ timers: this.data });
 
     // timeout则跳出递归
-    if (total_micro_second <= 0) {
-      that.setData({
-        timer: "已经截止"
-      });
+    if (this.data === {}) {
       return;
     }
 
     // 放在最后--尾递归
-    setTimeout(() => {
-      total_micro_second -= 10;
-      this.start(that);
-    }
-      , 10)
+    setTimeout(() => this.start(that), 10)
   }
 }
 
@@ -64,5 +75,16 @@ function date_format(micro_second) {
 function fill_zero_prefix(num) {
   return num < 10 ? "0" + num : num
 }
+
+// 删除数组元素
+function remove(arr, item) {
+  var result = [];
+  arr.forEach(function (element) {
+    if (element != item) {
+      result.push(element);
+    }
+  });
+  return result;
+}  
 
 module.exports = CountdownTimer;

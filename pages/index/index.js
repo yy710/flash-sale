@@ -1,12 +1,15 @@
 //获取应用实例
 const app = getApp()
 var Timer = require('../../countdownTimer.js');
-var timer = new Timer("timer1", new Date(2018, 2, 12, 17, 0, 0, 0));
-//timer.add("timer1", new Date(2018, 2, 12, 16, 0, 0, 0));
+var timer = new Timer();
+timer.add("timer1", new Date(2018, 2, 13, 15, 59, 0, 0), name=>console.log("callback(",name,")"));
+timer.add("timer2", new Date(2018, 2, 14, 12, 30, 0, 0));
+timer.add("timer3");
+console.log("timer: ", timer);
 
 Page({
   data: {
-    timers: [],
+    timers: {},
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
