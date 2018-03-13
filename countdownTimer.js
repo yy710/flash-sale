@@ -2,8 +2,8 @@ class CountdownTimer {
   constructor() {
     // define arrary to store timer object
     this.timers = [];
-    this._timers = [];//参与刷新
-    // define map to sync weapp data
+    this.timersIsRunning = [];//参与刷新列表
+    // define object to sync weapp data
     this.data = {};
   }
 
@@ -15,40 +15,43 @@ class CountdownTimer {
       total_micro_second: 0,
       callback: callback
     });
+    this.data[name] = "抢购即将开始";
   }
 
   stop(name = '') {
-    this.timers.forEach(item => {
-      if (item.name === name) {
-        // delete 
-remove(this.timers, );
-      }
-    })
+    this.timersIsRunning = remove(this.timersIsRunning, name);
   }
 
-  start(that,timers,) {
-    // 渲染倒计时时钟
+  start(name = '') {
     this.timers.forEach(item => {
+      if (item.name === name) {
+        this.timersIsRunning.push(item);
+      }
+    });
+  }
+
+  run(that) {
+    let temp = [];
+    // 渲染倒计时时钟
+    this.timersIsRunning.forEach(item => {
       item.total_micro_second = item.endtime.getTime() - (new Date());
       this.data[item.name] = date_format(item.total_micro_second);
-      // delete timer
       if (item.total_micro_second <= 0) {
-        this.data[item.name] = "抢购已结束，请关注下一次";
-        //delete this.data[item.name];
+        this.data[item.name] = "抢购已结束";
+      } else {
+        item.total_micro_second -= 10;
+        temp.push(item);
       }
-
-      item.total_micro_second -= 10;
     });
+    this.timersIsRunning = temp;
 
     that.setData({ timers: this.data });
 
-    // timeout则跳出递归
-    if (this.data === {}) {
-      return;
-    }
+    // 跳出递归
+    if (this.timersIsRunning.length === 0) return;
 
     // 放在最后--尾递归
-    setTimeout(() => this.start(that), 10)
+    setTimeout(() => this.run(that), 1000)
   }
 }
 
@@ -67,8 +70,9 @@ function date_format(micro_second) {
   // 秒位
   var sec = fill_zero_prefix((second - hr * 3600 - min * 60));// equal to => var sec = second % 60;
   // 毫秒位，保留2位
-  var micro_sec = fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
-  return `剩${days}天${hr}小时${min}分${sec}.${micro_sec}秒`;
+  //var micro_sec = fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
+  //return `剩${days}天${hr}小时${min}分${sec}.${micro_sec}秒`;
+  return `剩${days}天${hr}小时${min}分${sec}秒`;
 }
 
 // 位数不足补零
@@ -80,11 +84,11 @@ function fill_zero_prefix(num) {
 function remove(arr, item) {
   var result = [];
   arr.forEach(function (element) {
-    if (element != item) {
+    if (element.name != item) {
       result.push(element);
     }
   });
   return result;
-}  
+}
 
 module.exports = CountdownTimer;

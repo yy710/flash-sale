@@ -1,7 +1,5 @@
 <view class="container">
-
   <view class="doc-title zan-hairline--bottom">汽车聚划算</view>
-
   <view class="zan-panel">
     <view class="zan-card">
       <view class="zan-card__thumb">
@@ -28,12 +26,70 @@
           </view>
         </view>
 
-        <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__left-col zan-c-red">正在秒杀中，戳这里抢购</view>
+      </view>     
+    </view>    
+  </view>
+
+<view class="zan-panel">
+    <view class="zan-card">
+      <view class="zan-card__thumb">
+        <image class="zan-card__img" src="../../images/tang-01.jpg" mode="aspectFit"></image>
+      </view>
+      <view class="zan-card__detail">
+        <view class="zan-card__detail-row">
+          <view class="zan-card__right-col">¥ 28.50万</view>
+          <view class="zan-card__left-col zan-ellipsis--l2">
+            比亚迪 唐100
+          </view>
         </view>
 
-      </view>
-    </view>
+        <view class="zan-card__detail-row zan-c-gray-darker">
+          <view class="zan-card__right-col zan-c-red">现在还剩2台</view>
+          <view class="zan-card__left-col">
+            2017款 2.0T 5座SUV
+          </view>
+        </view>
+
+        <view class="zan-card__detail-row zan-c-gray-darker">
+          <view class="zan-card__left-col">
+            {{timers["timer2"]}}
+          </view>
+        </view>
+
+      </view>     
+    </view>    
   </view>
+
+
+<view class="zan-panel">
+    <view class="zan-card">
+      <view class="zan-card__thumb">
+        <image class="zan-card__img" src="../../images/tang-01.jpg" mode="aspectFit"></image>
+      </view>
+      <view class="zan-card__detail">
+        <view class="zan-card__detail-row">
+          <view class="zan-card__right-col">¥ 3.99万</view>
+          <view class="zan-card__left-col zan-ellipsis--l2">
+            比亚迪 F0
+          </view>
+        </view>
+
+        <view class="zan-card__detail-row zan-c-gray-darker">
+          <view class="zan-card__right-col zan-c-red">现在还剩5台</view>
+          <view class="zan-card__left-col">
+            2017款 1.0 A0级
+          </view>
+        </view>
+
+        <view class="zan-card__detail-row zan-c-gray-darker">
+          <view class="zan-card__left-col">
+            {{timers["timer3"]}}
+          </view>
+        </view>
+
+      </view>     
+    </view>    
+  </view>
+
 
 </view>
