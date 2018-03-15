@@ -39,7 +39,7 @@ class CountdownTimer {
       if (item.total_micro_second <= 0) {
         this.data[item.name] = "抢购已结束";
       } else {
-        item.total_micro_second -= 10;
+        //item.total_micro_second -= 1000;
         temp.push(item);
       }
     });

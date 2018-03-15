@@ -2,8 +2,8 @@
 const app = getApp()
 var Timer = require('../../countdownTimer.js');
 var timer = new Timer();
-timer.add("timer1", new Date(2018, 2, 14, 0, 54, 0, 0), name=>console.log("callback(",name,")"));
-timer.add("timer2", new Date(2018, 2, 14, 0, 53, 0, 0));
+timer.add("timer1", new Date(2018, 2, 14, 10, 1, 5, 0), name=>console.log("callback(",name,")"));
+timer.add("timer2", new Date(2018, 2, 15, 8, 10, 0, 0));
 timer.add("timer3");
 console.log("timer: ", timer);
 

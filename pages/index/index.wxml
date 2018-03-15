@@ -1,5 +1,5 @@
 <view class="container">
-  <view class="doc-title zan-hairline--bottom">汽车聚划算</view>
+  <view class="doc-title zan-hairline--bottom">车聚购</view>
   <view class="zan-panel">
     <view class="zan-card">
       <view class="zan-card__thumb">
@@ -14,7 +14,7 @@
         </view>
 
         <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__right-col zan-c-red">现在还剩1台</view>
+          <view class="zan-card__right-col zan-c-red">剩1台</view>
           <view class="zan-card__left-col">
             2017款 1.5T 7座MPV
           </view>
@@ -44,7 +44,7 @@
         </view>
 
         <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__right-col zan-c-red">现在还剩2台</view>
+          <view class="zan-card__right-col zan-c-red">剩2台</view>
           <view class="zan-card__left-col">
             2017款 2.0T 5座SUV
           </view>
@@ -75,7 +75,7 @@
         </view>
 
         <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__right-col zan-c-red">现在还剩5台</view>
+          <view class="zan-card__right-col zan-c-red">剩5台</view>
           <view class="zan-card__left-col">
             2017款 1.0 A0级
           </view>
