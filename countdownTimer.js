@@ -2,53 +2,89 @@ class CountdownTimer {
   constructor() {
     // define arrary to store timer object
     this.timers = [];
-    this.timersIsRunning = [];//参与刷新列表
+    //this.timersIsRunning = [];//参与刷新列表
     // define object to sync weapp data
     this.data = {};
+    this.handles = new Map();
   }
 
   // add a timer
-  add(name, endTime = new Date(), callback = () => { }) {
+  add(name, endTime = new Date(), startTime = new Date(), callback = () => { }) {
     this.timers.push({
       name: name,
+      startTime: startTime,
       endtime: endTime,
       total_micro_second: 0,
       callback: callback
     });
-    this.data[name] = "抢购即将开始";
+    this.start(name);
+    return this;
   }
 
-  stop(name = '') {
-    this.timersIsRunning = remove(this.timersIsRunning, name);
+  end(name) {
+    this.setStatus(name, { id: "end", msg: "抢购已结束" });
+    return this;
   }
 
-  start(name = '') {
-    this.timers.forEach(item => {
-      if (item.name === name) {
-        this.timersIsRunning.push(item);
-      }
+  stop(name) {
+    this.setStatus(name, { id: "stop", msg: "抢购停止" });
+    return this;
+  }
+
+  start(name) {
+    this.setStatus(name, { id: "start", msg: "抢购进行中" });
+    return this;
+  }
+
+  wait(name) {
+    this.setStatus(name, { id: "wait", msg: "抢购即将开始" });
+    return this;
+  }
+
+  setStatus(name, status) {
+    this.timers = this.timers.map(item => {
+      item.name === name && (item.status = status);
+      return item;
     });
+    return this;
+  }
+
+  addHandle(status, handle) {
+    this.handles.set(status, handle);
+    return this;
   }
 
   run(that) {
-    let temp = [];
     // 渲染倒计时时钟
-    this.timersIsRunning.forEach(item => {
-      item.total_micro_second = item.endtime.getTime() - (new Date());
-      this.data[item.name] = date_format(item.total_micro_second);
-      if (item.total_micro_second <= 0) {
-        this.data[item.name] = "抢购已结束";
-      } else {
-        //item.total_micro_second -= 1000;
-        temp.push(item);
+    let i = 0;
+    this.timers = this.timers.map(item => {
+      if (item.status === "stop") return item;
+      if (item.status === "end") return item;
+
+      if (item.startTime > (new Date())) {
+        this.wait(item.name);
+        this.data[item.name] = date_format(item.startTime - (new Date()));
+        i = 1;
+        return item;
       }
+
+      item.total_micro_second = item.endtime.getTime() - (new Date());
+
+      if (item.total_micro_second <= 0) {
+        this.data[item.name] = date_format(0);
+        this.end(item.name);
+        return item;
+      }
+
+      this.data[item.name] = date_format(item.total_micro_second);
+      i = 1;
+      return item;
     });
-    this.timersIsRunning = temp;
 
     that.setData({ timers: this.data });
 
     // 跳出递归
-    if (this.timersIsRunning.length === 0) return;
+    if (i === 0) return this;
 
     // 放在最后--尾递归
     setTimeout(() => this.run(that), 1000)
