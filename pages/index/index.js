@@ -9,6 +9,16 @@ console.log("timer: ", timer);
 
 Page({
   data: {
+    products: [
+      {
+        name: "比亚迪 宋MAX",
+        price: 10.99,
+        model: "2017款 1.5T 7座MPV",
+        amount: 5,
+        status: "即将开始抢购",
+        countDown: ""
+      }
+    ],
     timers: {},
     motto: 'Hello World',
     userInfo: {},
