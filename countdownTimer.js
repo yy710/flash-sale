@@ -2,10 +2,9 @@ class CountdownTimer {
   constructor() {
     // define arrary to store timer object
     this.timers = [];
-    //this.timersIsRunning = [];//参与刷新列表
     // define object to sync weapp data
     this.data = {};
-    this.handles = new Map();
+    this.handlesMap = new Map();
   }
 
   // add a timer
@@ -50,7 +49,9 @@ class CountdownTimer {
   }
 
   addHandle(status, handle) {
-    this.handles.set(status, handle);
+    let handles = this.handlesMap.get(status)||[];
+    handles.push(handle);
+    this.handlesMap.set(status, handles);
     return this;
   }
 
