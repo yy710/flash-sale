@@ -5,4 +5,8 @@ class Product {
     this.timer = ct;
     this.data = {};
   }
+
+  addTimer(){
+
+  }
 }

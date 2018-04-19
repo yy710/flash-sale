@@ -4,39 +4,38 @@ class CountdownTimer {
     this.timers = [];
     // define object to sync weapp data
     this.data = {};
-    this.handlesMap = new Map();
+    //this.handlesMap = new Map();
   }
 
   // add a timer
-  add(name, endTime = new Date(), startTime = new Date(), callback = () => { }) {
+  add(name, endTime = new Date(), startTime = new Date()) {
     this.timers.push({
       name: name,
       startTime: startTime,
       endtime: endTime,
-      total_micro_second: 0,
-      callback: callback
+      total_micro_second: 0
     });
     this.start(name);
     return this;
   }
 
   end(name) {
-    this.setStatus(name, { id: "end", msg: "抢购已结束" });
+    this.setStatus(name, { id: "end", msg: "抢购已结束..." });
     return this;
   }
 
   stop(name) {
-    this.setStatus(name, { id: "stop", msg: "抢购停止" });
+    this.setStatus(name, { id: "stop", msg: "抢购停止..." });
     return this;
   }
 
   start(name) {
-    this.setStatus(name, { id: "start", msg: "抢购进行中" });
+    this.setStatus(name, { id: "start", msg: "抢购进行中..." });
     return this;
   }
 
   wait(name) {
-    this.setStatus(name, { id: "wait", msg: "抢购即将开始" });
+    this.setStatus(name, { id: "wait", msg: "抢购即将开始..." });
     return this;
   }
 
@@ -49,7 +48,7 @@ class CountdownTimer {
   }
 
   addHandle(status, handle) {
-    let handles = this.handlesMap.get(status)||[];
+    let handles = this.handlesMap.get(status) || [];
     handles.push(handle);
     this.handlesMap.set(status, handles);
     return this;
@@ -58,19 +57,22 @@ class CountdownTimer {
   run(that) {
     // 渲染倒计时时钟
     let i = 0;
-    this.timers = this.timers.map(item => {
+    let _timers = [];
+    this.timers.forEach(item => {
       if (item.status === "stop") return item;
       if (item.status === "end") return item;
 
+      // prepare
       if (item.startTime > (new Date())) {
         this.wait(item.name);
         this.data[item.name] = date_format(item.startTime - (new Date()));
         i = 1;
+        _timers.push(item);
         return item;
       }
 
       item.total_micro_second = item.endtime.getTime() - (new Date());
-
+      // finished
       if (item.total_micro_second <= 0) {
         this.data[item.name] = date_format(0);
         this.end(item.name);
@@ -79,9 +81,11 @@ class CountdownTimer {
 
       this.data[item.name] = date_format(item.total_micro_second);
       i = 1;
+      _timers.push(item);
       return item;
     });
 
+    this.timers = _timers;
     that.setData({ timers: this.data });
 
     // 跳出递归

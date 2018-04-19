@@ -1,95 +1,32 @@
 <view class="container">
   <view class="doc-title zan-hairline--bottom">车聚购</view>
-  <view class="zan-panel">
+  <view class="zan-panel" wx:for="{{products}}" wx:key="{{item.name}}">
     <view class="zan-card">
       <view class="zan-card__thumb">
-        <image class="zan-card__img" src="../../images/song-max-01.jpg" mode="aspectFit"></image>
+        <image class="zan-card__img" src="{{item.image}}" mode="aspectFit"></image>
       </view>
       <view class="zan-card__detail">
         <view class="zan-card__detail-row">
-          <view class="zan-card__right-col">¥ 10.99万</view>
+          <view class="zan-card__right-col">{{item.price}}万</view>
           <view class="zan-card__left-col zan-ellipsis--l2">
-            比亚迪 宋MAX
+            {{item.name}}
           </view>
         </view>
 
         <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__right-col zan-c-red">剩1台</view>
+          <view class="zan-card__right-col zan-c-red">剩{{item.amount}}台</view>
           <view class="zan-card__left-col">
-            2017款 1.5T 7座MPV
+            {{item.model}}
           </view>
         </view>
 
         <view class="zan-card__detail-row zan-c-gray-darker">
           <view class="zan-card__left-col">
-            {{timers["timer1"]}}
+            {{timers[item.name]}}
           </view>
         </view>
 
-      </view>     
-    </view>    
-  </view>
-
-<view class="zan-panel">
-    <view class="zan-card">
-      <view class="zan-card__thumb">
-        <image class="zan-card__img" src="../../images/tang-01.jpg" mode="aspectFit"></image>
       </view>
-      <view class="zan-card__detail">
-        <view class="zan-card__detail-row">
-          <view class="zan-card__right-col">¥ 28.50万</view>
-          <view class="zan-card__left-col zan-ellipsis--l2">
-            比亚迪 唐100
-          </view>
-        </view>
-
-        <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__right-col zan-c-red">剩2台</view>
-          <view class="zan-card__left-col">
-            2017款 2.0T 5座SUV
-          </view>
-        </view>
-
-        <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__left-col">
-            {{timers["timer2"]}}
-          </view>
-        </view>
-
-      </view>     
-    </view>    
+    </view>
   </view>
-
-
-<view class="zan-panel">
-    <view class="zan-card">
-      <view class="zan-card__thumb">
-        <image class="zan-card__img" src="../../images/tang-01.jpg" mode="aspectFit"></image>
-      </view>
-      <view class="zan-card__detail">
-        <view class="zan-card__detail-row">
-          <view class="zan-card__right-col">¥ 3.99万</view>
-          <view class="zan-card__left-col zan-ellipsis--l2">
-            比亚迪 F0
-          </view>
-        </view>
-
-        <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__right-col zan-c-red">剩5台</view>
-          <view class="zan-card__left-col">
-            2017款 1.0 A0级
-          </view>
-        </view>
-
-        <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__left-col">
-            {{timers["timer3"]}}
-          </view>
-        </view>
-
-      </view>     
-    </view>    
-  </view>
-
-
 </view>

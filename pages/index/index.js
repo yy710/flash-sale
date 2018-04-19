@@ -2,23 +2,13 @@
 const app = getApp()
 var Timer = require('../../countdownTimer.js');
 var timer = new Timer();
-timer.add("timer1", new Date(2018, 2, 21, 22, 31, 5, 0));
-timer.add("timer2", new Date(2018, 2, 21, 8, 10, 0, 0), new Date(2018, 2, 21, 2, 15,0,0));
-timer.add("timer3");
-console.log("timer: ", timer);
+// timer.add("timer1", new Date(2018, 2, 21, 22, 31, 5, 0));
+// timer.add("timer2", new Date(2018, 2, 21, 8, 10, 0, 0), new Date(2018, 2, 21, 2, 15, 0, 0));
+// timer.add("timer3");
 
 Page({
   data: {
-    products: [
-      {
-        name: "比亚迪 宋MAX",
-        price: 10.99,
-        model: "2017款 1.5T 7座MPV",
-        amount: 5,
-        status: "即将开始抢购",
-        countDown: ""
-      }
-    ],
+    products: [],
     timers: {},
     userInfo: {}
   },
@@ -29,6 +19,46 @@ Page({
     })
   },
   onLoad: function () {
+    // get products array
+    let _progucts = [
+      {
+        name: "比亚迪 宋MAX",
+        price: 10.99,
+        model: "2017款 1.5T 7座MPV",
+        image: "../../images/song-max-01.jpg",
+        amount: 5,
+        status: { id: 1, msg: "即将开始..." },
+        timer: { start: new Date(2018, 3, 19, 22, 31, 5, 0), end: new Date }
+      },
+      {
+        name: "比亚迪 唐100",
+        price: 28.5,
+        model: "2017款 2.0T 5座SUV",
+        image: "../../images/tang-01.jpg",
+        amount: 1,
+        status: { id: 2, msg: "正在抢购中..." },
+        timer: { start: new Date(), end: new Date }
+      },
+      {
+        name: "比亚迪 F0",
+        price: 3.99,
+        model: "2018款 1.0 A0级",
+        image: "../../images/song-max-01.jpg",
+        amount: 3,
+        status: { id: 3, msg: "抢购已结束..." },
+        timer: { start: new Date(), end: new Date(2018, 3, 19, 22, 31, 5, 0) }
+      }
+    ];
+
+    //create products data
+    let products = _progucts.map(item=>{
+      timer.add(item.name, item.timer.end, item.timer.start);
+      delete item.timer;
+      return item;
+    });
+
+    this.setData({products: products});
+    console.log("timer: ", timer);
     timer.start("timer1");
     timer.start("timer2");
     timer.start("timer3");
