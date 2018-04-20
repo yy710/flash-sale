@@ -19,6 +19,12 @@ Page({
     })
   },
   onLoad: function () {
+    // websocket
+    wx.connectSocket({
+      url: 'wss://xingshenxunjiechuxing.com',
+      success: console.log
+    })
+
     // get products array
     let _progucts = [
       {
@@ -45,24 +51,20 @@ Page({
         model: "2018款 1.0 A0级",
         image: "../../images/song-max-01.jpg",
         amount: 3,
-        status: { id: 3, msg: "抢购已结束..." },
+        status: { id: 4, msg: "已抢完..." },
         timer: { start: new Date(), end: new Date(2018, 3, 19, 22, 31, 5, 0) }
       }
     ];
 
     //create products data
-    let products = _progucts.map(item=>{
+    let products = _progucts.map(item => {
       timer.add(item.name, item.timer.end, item.timer.start);
       delete item.timer;
       return item;
     });
 
-    this.setData({products: products});
+    this.setData({ products: products });
     console.log("timer: ", timer);
-    timer.start("timer1");
-    timer.start("timer2");
-    timer.start("timer3");
-    timer.stop("timer3");
     timer.run(this);
 
     if (app.globalData.userInfo) {
