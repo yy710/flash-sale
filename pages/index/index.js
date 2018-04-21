@@ -21,8 +21,18 @@ Page({
   onLoad: function () {
     // websocket
     wx.connectSocket({
-      url: 'wss://xingshenxunjiechuxing.com',
+      url: 'wss://www.xingshenxunjiechuxing.com',
       success: console.log
+    })
+    wx.onSocketOpen(function (res) {
+      console.log('WebSocket连接已打开！')
+      wx.sendSocketMessage({data: "hehe"});
+    })
+    wx.onSocketError(function (res) {
+      console.log('WebSocket连接打开失败，请检查！');
+    })
+    wx.onSocketMessage(function (res) {
+      console.log('收到服务器内容：' + res.data);
     })
 
     // get products array
