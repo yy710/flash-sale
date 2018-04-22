@@ -1,3 +1,58 @@
+class Timer {
+  constructor(name = 'no name', status = {}, endTime = (new Date()).getTime, startTime = (new Date()).getTime) {
+    this.name = name;
+    this.startTime = startTime;
+    this.endTime = endTime;
+    this.status = status;
+    this.ms = 0;
+  }
+
+  end() {
+    this.setStatus({ id: "end", msg: "抢购已结束..." });
+    return this;
+  }
+
+  stop() {
+    this.setStatus({ id: "stop", msg: "抢购停止..." });
+    return this;
+  }
+
+  start() {
+    this.setStatus({ id: "start", msg: "抢购进行中..." });
+    return this;
+  }
+
+  wait() {
+    this.setStatus({ id: "wait", msg: "抢购即将开始..." });
+    return this;
+  }
+
+  setStatus(status) {
+    this.status = status;
+    return this;
+  }
+
+  getStatus() {
+    let currenTime = (new Date()).getTime();
+    let t1 = this.startTime - currenTime;
+    let t2 = this.endTime - currenTime;
+
+    if (t1 > 0) {
+      this.ms = t1;
+      this.wait();
+    }
+    else if (t2 > 0) {
+      this.ms = t2;
+      this.start();
+    } else {
+      this.end();
+    }
+    return this.status;
+  }
+}
+//------------------------------------------------------------------------------------------
+
+
 class CountdownTimer {
   constructor() {
     // define arrary to store timer object
@@ -8,42 +63,10 @@ class CountdownTimer {
   }
 
   // add a timer
-  add(name, endTime = new Date(), startTime = new Date()) {
-    this.timers.push({
-      name: name,
-      startTime: startTime,
-      endtime: endTime,
-      total_micro_second: 0
-    });
-    this.start(name);
-    return this;
-  }
-
-  end(name) {
-    this.setStatus(name, { id: "end", msg: "抢购已结束..." });
-    return this;
-  }
-
-  stop(name) {
-    this.setStatus(name, { id: "stop", msg: "抢购停止..." });
-    return this;
-  }
-
-  start(name) {
-    this.setStatus(name, { id: "start", msg: "抢购进行中..." });
-    return this;
-  }
-
-  wait(name) {
-    this.setStatus(name, { id: "wait", msg: "抢购即将开始..." });
-    return this;
-  }
-
-  setStatus(name, status) {
-    this.timers = this.timers.map(item => {
-      item.name === name && (item.status = status);
-      return item;
-    });
+  add(name = 'no name', status = {}, endTime = (new Date()).getTime, startTime = (new Date()).getTime) {
+    let timer = new Timer(name, status, endTime, startTime);
+    this.timers.push(timer);
+    //this.start(name);
     return this;
   }
 
@@ -58,31 +81,28 @@ class CountdownTimer {
     // 渲染倒计时时钟
     let i = 0;
     let _timers = [];
-    this.timers.forEach(item => {
-      if (item.status === "stop") return item;
-      if (item.status === "end") return item;
+    //let currentTime = (new Date()).getTime();
 
-      // prepare
-      if (item.startTime > (new Date())) {
-        this.wait(item.name);
-        this.data[item.name] = date_format(item.startTime - (new Date()));
+    this.timers.forEach(item => {
+      let status = item.getStatus();
+      if (status.id === "stop" || status.id === "end"){
+        let ct = {};
+        ct.time = date_format(0);
+        ct.status = status.msg;
+        this.data[item.name] = ct;
+        return item;
+      }
+
+      // wait
+      if (status.id === 'wait' || status.id === 'start') {
+        let ct = {};
+        ct.time = date_format(item.ms);
+        ct.status = status.msg;
+        this.data[item.name] = ct;
         i = 1;
         _timers.push(item);
         return item;
       }
-
-      item.total_micro_second = item.endtime.getTime() - (new Date());
-      // finished
-      if (item.total_micro_second <= 0) {
-        this.data[item.name] = date_format(0);
-        this.end(item.name);
-        return item;
-      }
-
-      this.data[item.name] = date_format(item.total_micro_second);
-      i = 1;
-      _timers.push(item);
-      return item;
     });
 
     this.timers = _timers;

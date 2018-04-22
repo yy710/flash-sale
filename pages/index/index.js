@@ -19,6 +19,7 @@ Page({
     })
   },
   onLoad: function () {
+    let that = this;
     // websocket
     wx.connectSocket({
       url: 'wss://www.xingshenxunjiechuxing.com',
@@ -32,50 +33,21 @@ Page({
       console.log('WebSocket连接打开失败，请检查！');
     })
     wx.onSocketMessage(function (res) {
-      console.log('收到服务器内容：' + res.data);
-    })
+      //let products = res.data;
+      let _products = JSON.parse(res.data);
+      console.log('收到服务器内容：', _products);
 
-    // get products array
-    let _progucts = [
-      {
-        name: "比亚迪 宋MAX",
-        price: 10.99,
-        model: "2017款 1.5T 7座MPV",
-        image: "../../images/song-max-01.jpg",
-        amount: 5,
-        status: { id: 1, msg: "即将开始..." },
-        timer: { start: new Date(2018, 3, 19, 22, 31, 5, 0), end: new Date }
-      },
-      {
-        name: "比亚迪 唐100",
-        price: 28.5,
-        model: "2017款 2.0T 5座SUV",
-        image: "../../images/tang-01.jpg",
-        amount: 1,
-        status: { id: 2, msg: "正在抢购中..." },
-        timer: { start: new Date(), end: new Date }
-      },
-      {
-        name: "比亚迪 F0",
-        price: 3.99,
-        model: "2018款 1.0 A0级",
-        image: "../../images/song-max-01.jpg",
-        amount: 3,
-        status: { id: 4, msg: "已抢完..." },
-        timer: { start: new Date(), end: new Date(2018, 3, 19, 22, 31, 5, 0) }
-      }
-    ];
+      // get products array
+      let products = _products.map(item => {
+        timer.add(item.name, item.status, item.expire.end, item.expire.start);
+        delete item.expire;
+        return item;
+      });
 
-    //create products data
-    let products = _progucts.map(item => {
-      timer.add(item.name, item.timer.end, item.timer.start);
-      delete item.timer;
-      return item;
-    });
-
-    this.setData({ products: products });
-    console.log("timer: ", timer);
-    timer.run(this);
+      that.setData({ products: products });
+      console.log("timer: ", timer);
+      timer.run(that);
+    }) 
 
     if (app.globalData.userInfo) {
       this.setData({
