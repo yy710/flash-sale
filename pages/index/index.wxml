@@ -1,38 +1,43 @@
 <view class="container">
   <view class="doc-title zan-hairline--bottom">车聚购</view>
-  <view class="zan-panel" wx:for="{{products}}" wx:key="{{item.name}}">
-    <view class="zan-card">
-      <view class="zan-card__thumb">
-        <image class="zan-card__img" src="{{item.image}}" mode="aspectFit"></image>
-      </view>
-      <view class="zan-card__detail">
-        <view class="zan-card__detail-row">
-          <view class="zan-card__right-col">{{item.price}}万</view>
-          <view class="zan-card__left-col zan-ellipsis--l2">
-            {{item.name}}
-          </view>
+  <form bindsubmit='buy' report-submit='{{true}}'>
+    <view class="zan-panel" wx:for="{{products}}" wx:key="{{item.name}}">
+      <view class="zan-card">
+        <view class="zan-card__thumb">
+          <image class="zan-card__img" src="{{item.image}}" mode="aspectFit"></image>
         </view>
-
-        <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__right-col zan-c-red">剩{{item.amount}}台</view>
-          <view class="zan-card__left-col">
-            {{item.model}}
+        <view class="zan-card__detail">
+          <view class="zan-card__detail-row">
+            <view class="zan-card__right-col">{{item.price}}万</view>
+            <view class="zan-card__left-col zan-ellipsis--l2">
+              {{item.name}}
+            </view>
           </view>
-        </view>
 
-        <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__left-col">
-            {{timers[item.name].status}}
+          <view class="zan-card__detail-row zan-c-gray-darker">
+            <view class="zan-card__right-col zan-c-red">剩{{item.amount}}台</view>
+            <view class="zan-card__left-col">
+              {{item.model}}
+            </view>
           </view>
-        </view>
 
-        <view class="zan-card__detail-row zan-c-gray-darker">
-          <view class="zan-card__left-col">
-            {{timers[item.name].time}}
+          <view class="zan-card__detail-row zan-c-gray-darker">
+            <view class="zan-card__right-col">
+              <button class="weui-btn mini-btn" type="default" size="mini" disabled='{{item.amount === 0}}' form-type='submit' data-product-id='{{item.id}}'>我要抢购</button>
+            </view>
+            <view class="zan-card__left-col">
+              {{timers[item.name].status}}
+            </view>
           </view>
-        </view>
 
+          <view class="zan-card__detail-row zan-c-gray-darker">
+            <view class="zan-card__left-col">
+              {{timers[item.name].time}}
+            </view>
+          </view>
+
+        </view>
       </view>
     </view>
-  </view>
+  </form>
 </view>

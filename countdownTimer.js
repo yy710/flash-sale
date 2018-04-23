@@ -77,20 +77,22 @@ class CountdownTimer {
     return this;
   }
 
+  // 渲染倒计时时钟
   run(that) {
-    // 渲染倒计时时钟
+    // flag for empty timers arrary
     let i = 0;
+    // define activing timers
     let _timers = [];
-    //let currentTime = (new Date()).getTime();
 
     this.timers.forEach(item => {
       let status = item.getStatus();
-      if (status.id === "stop" || status.id === "end"){
+
+      if (status.id === "stop" || status.id === "end") {
         let ct = {};
         ct.time = date_format(0);
         ct.status = status.msg;
         this.data[item.name] = ct;
-        return item;
+        return;
       }
 
       // wait
@@ -101,7 +103,7 @@ class CountdownTimer {
         this.data[item.name] = ct;
         i = 1;
         _timers.push(item);
-        return item;
+        return;
       }
     });
 
