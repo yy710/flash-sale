@@ -13,17 +13,17 @@ class Timer {
   }
 
   stop() {
-    this.setStatus({ id: "stop", msg: "抢购停止..." });
+    this.setStatus({ id: "stop", msg: "抢购已停止..." });
     return this;
   }
 
   start() {
-    this.setStatus({ id: "start", msg: "抢购进行中..." });
+    this.setStatus({ id: "start", msg: "距抢购结束" });
     return this;
   }
 
   wait() {
-    this.setStatus({ id: "wait", msg: "抢购即将开始..." });
+    this.setStatus({ id: "wait", msg: "距抢购开始" });
     return this;
   }
 
