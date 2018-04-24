@@ -22,17 +22,17 @@
           </view>
 
           <view class="zan-card__detail-row zan-c-gray-darker">
-            <view class="zan-card__right-col">
-              <button class="weui-btn mini-btn" type="default" size="mini" disabled='{{item.amount === 0}}' form-type='submit' data-product-id='{{item.id}}'>我要抢购</button>
+          <view class="zan-card__right-col">
+              {{timers[item.name].time}}
             </view>
             <view class="zan-card__left-col">
-              {{timers[item.name].status}}
+              {{timers[item.name].status.msg}}
             </view>
           </view>
 
           <view class="zan-card__detail-row zan-c-gray-darker">
-            <view class="zan-card__left-col">
-              {{timers[item.name].time}}
+            <view class="zan-card__right-col">
+              <button class="weui-btn mini-btn" type="default" size="mini" disabled="{{timers[item.name].status.id !== 'start' || item.amount === 0}}" form-type='submit' data-product-id='{{item.id}}'>我要抢购</button>
             </view>
           </view>
 

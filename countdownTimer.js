@@ -90,7 +90,7 @@ class CountdownTimer {
       if (status.id === "stop" || status.id === "end") {
         let ct = {};
         ct.time = date_format(0);
-        ct.status = status.msg;
+        ct.status = status;
         this.data[item.name] = ct;
         return;
       }
@@ -99,7 +99,7 @@ class CountdownTimer {
       if (status.id === 'wait' || status.id === 'start') {
         let ct = {};
         ct.time = date_format(item.ms);
-        ct.status = status.msg;
+        ct.status = status;
         this.data[item.name] = ct;
         i = 1;
         _timers.push(item);
