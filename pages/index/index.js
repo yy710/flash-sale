@@ -70,9 +70,9 @@ Page({
       console.log('WebSocketopen fail!');
     })
     wx.onSocketMessage(function (res) {
-      let products = JSON.parse(res.data);
-      console.log('webSocket recived from server：', products);
-      that.setData({ products: products });
+      const { index, amount } = JSON.parse(res.data);
+      console.log('webSocket recived from server：', res.data);
+      that.setData({ "products[1].amount": amount });
     })
   }
 })
