@@ -33,7 +33,7 @@
             <button class="weui-btn mini-btn" type="default" size="mini" disabled="{{false}}" data-product-id='{{item.id}}'>支付定金</button>
           </view>
           <view class="zan-card__left-col zan-ellipsis--l2">
-            超过15分钟未支付定金订单自动取消
+            超过5分钟未支付定金订单自动取消
           </view>
         </view>
 
